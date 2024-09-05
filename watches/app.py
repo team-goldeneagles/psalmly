@@ -1,7 +1,12 @@
-from flask import Flask, request, jsonify
-from fitbit.main import RequestHandler
+import sys
 import os
 from dotenv import load_dotenv
+
+# Add the 'watches' directory to the system path
+sys.path.append(os.path.dirname(os.path.abspath(__file__)))
+
+from fitbit.main import RequestHandler
+from flask import Flask, request, jsonify
 
 # Load environment variables from .env file
 load_dotenv()
