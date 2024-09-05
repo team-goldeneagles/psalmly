@@ -1,8 +1,8 @@
 import os
 from dotenv import load_dotenv
-from generate_music import generate_music
-from fetch_data import process_fitbit_data
-from generate_lyrics import generate_lyrics_and_genres
+from .generate_music import generate_music  # Use relative imports
+from .fetch_data import process_fitbit_data
+from .generate_lyrics import generate_lyrics_and_genres
 
 # Load environment variables from the .env file
 load_dotenv()
