@@ -16,7 +16,7 @@ app = Flask(__name__)
 @app.route('/generate_music', methods=['POST'])
 def generate_music_route():
     data = request.json
-    access_token = os.getenv('ACCESS_TOKEN')
+    access_token = data.get('ACCESS_TOKEN')
     date = data.get('date')
     mood = data.get('mood')
     aiml_api_key = os.getenv('AIML_API_KEY')
