@@ -1,6 +1,6 @@
 import requests
 
-def generate_music(lyrics, genre, aiml_api_key):
+def generate_music(lyrics, genre, title, aiml_api_key):
     url = "https://api.aimlapi.com/generate/custom-mode"
     headers = {
         "Authorization": f"Bearer {aiml_api_key}",
@@ -9,7 +9,7 @@ def generate_music(lyrics, genre, aiml_api_key):
     payload = {
         "prompt": lyrics,
         "tags": genre,
-        "title": "First Testing Song",
+        "title": title,
         "make_instrumental": False,
         "wait_audio": True
     }
