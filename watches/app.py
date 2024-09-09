@@ -20,8 +20,9 @@ def generate_music_route():
     date = data.get('date')
     mood = data.get('mood')
     aiml_api_key = os.getenv('AIML_API_KEY')
+    gloo_api_key = os.getenv("GLOO_API_KEY")
 
-    handler = RequestHandler(access_token, date, mood, aiml_api_key)
+    handler = RequestHandler(access_token, date, mood, aiml_api_key, gloo_api_key)
     output = handler.handle_request()
 
     return jsonify(output)
