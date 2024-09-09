@@ -34,12 +34,12 @@ def generate_lyrics_and_genres(fitbit_data, mood, aiml_api_key, gloo_api_key):
       genres = song_data.get("Genres", "Unknown")
       lyrics = song_data.get("Lyrics", "No lyrics available")
 
-  except json.JSONDecodeError as e:
-      print(f"JSONDecodeError: {e}")
-      return "Error: Invalid JSON response", "Unknown genre"
-  
-  except Exception as e:
-      print(f"Error: {e}")
-      return "Error: Unable to generate lyrics", "Unknown genre"
+    except json.JSONDecodeError as e:
+        print(f"JSONDecodeError: {e}")
+        return "Error: Invalid JSON response", "Unknown genre"
+    
+    except Exception as e:
+        print(f"Error: {e}")
+        return "Error: Unable to generate lyrics", "Unknown genre"
 
-  return lyrics, genres, title
+    return lyrics, genres, title
