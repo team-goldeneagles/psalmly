@@ -31,30 +31,34 @@ def generate_lyrics_and_genres(fitbit_data, mood, aiml_api_key, gloo_api_key):
           },
       ],
         temperature=1,
-        max_tokens=500,
+        max_tokens=2500,
         top_p=0.9,
         frequency_penalty=0.2,
-        presence_penalty=0
+        presence_penalty=0,
+        response_format={
+          "type": "json_object"
+        }
       )
-
-      json_output = response.choices[0].message.content
-      print(json_output)
-      # Add a check if the response is empty or not valid JSON
-      if not json_output.strip():
-          raise ValueError("Received empty response from OpenAI")
-
-      # Attempt to parse the response as JSON
-      song_data = json.loads(json_output)
-      title = song_data.get("Title", "Untitled")
-      genres = song_data.get("Genres", "Unknown")
-      lyrics = song_data.get("Lyrics", "No lyrics available")
+      try:
+          # Parse the JSON response
+          json_output = response.choices[0].message.content
+          song_data = json.loads(json_output)
+          # Extract title, genre, and lyrics
+          title = song_data.get("Title", "Untitled")
+          genre = song_data.get("Genres", "Unknown genre")
+          lyrics = song_data.get("Lyrics", "No lyrics generated")
+      except Exception as e:
+          print(f"Error parsing OpenAI response: {e}")
+          title = "Untitled"
+          genre = "Unknown genre"
+          lyrics = "No lyrics generated"
 
     except json.JSONDecodeError as e:
-        print(f"JSONDecodeError: {e}")
+        print(f"OpenAI error: {e}")
         return "Error: Invalid JSON response", "Unknown genre"
     
     except Exception as e:
-        print(f"Error: {e}")
+        print(f"Error with generate lyrics function: {e}")
         return "Error: Unable to generate lyrics", "Unknown genre"
 
-    return lyrics, genres, title
+    return lyrics, genre, title

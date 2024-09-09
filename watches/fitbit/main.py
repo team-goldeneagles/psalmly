@@ -37,4 +37,3 @@ if __name__ == "__main__":
     # Pass gloo_api_key to the handler
     handler = RequestHandler(access_token, date, mood, aiml_api_key, gloo_api_key)
     output = handler.handle_request()
-    print(output)
