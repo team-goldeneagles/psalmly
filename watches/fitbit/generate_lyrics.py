@@ -5,7 +5,6 @@ from .gloo_api import gloo_api
 def generate_lyrics_and_genres(fitbit_data, mood, aiml_api_key, gloo_api_key):
     # Call the gloo_api function to get christian topics related to the mood
     christiantopics = gloo_api(mood, gloo_api_key)
-    print(f"Fitbit Data: {fitbit_data}")
 
     # Construct the lyrics prompt with mood, fitbit data, and christian topics
     lyrics_prompt = f"Question and answers about mood, how I want to feel and music I would prefer to lisen to: {mood}. Here is the fitbit health data: {fitbit_data}."
