@@ -5,8 +5,8 @@ from dotenv import load_dotenv
 # Add the 'watches' directory to the system path
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
 
-from fitbit.main import handle_request as handle_fitbit_request
-from nodevice.main import handle_request as handle_nodevice_request
+from fitbit.main import RequestHandler as FitbitRequestHandler  # Import Fitbit handler
+from nodevice.main import RequestHandler as NoDeviceRequestHandler  # Import No-device handler
 from flask import Flask, request, jsonify
 
 # Load environment variables from .env file
@@ -27,9 +27,11 @@ def generate_music_route():
 
     # Decide which handler to use based on the device type
     if device == "fitbit":
-        output = handle_fitbit_request(fitbit_data, mood, aiml_api_key, gloo_api_key)
+        handler = FitbitRequestHandler(access_token, date, mood, aiml_api_key, gloo_api_key)
+        output = handler.handle_request()
     else:
-        output = handle_nodevice_request(user_input, aiml_api_key, gloo_api_key)
+        handler = NoDeviceRequestHandler(user_input, mood, aiml_api_key, gloo_api_key)
+        output = handler.handle_request()
 
     return jsonify(output)
 
