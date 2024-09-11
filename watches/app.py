@@ -30,7 +30,7 @@ def generate_music_route():
         handler = FitbitRequestHandler(access_token, date, mood, aiml_api_key, gloo_api_key)
         output = handler.handle_request()
     else:
-        handler = NoDeviceRequestHandler(user_input, mood, aiml_api_key, gloo_api_key)
+        handler = NoDeviceRequestHandler(user_input, aiml_api_key, gloo_api_key)
         output = handler.handle_request()
 
     return jsonify(output)
