@@ -1,5 +1,5 @@
 import requests
-from ...supabase_functions import handle_audio_storage  # Import the new Supabase function
+from ..supabase_functions import handle_audio_storage  # Import the new Supabase function
 
 def generate_music(lyrics, genre, title, aiml_api_key):
     url = "https://api.aimlapi.com/generate/custom-mode"

@@ -24,7 +24,7 @@ def generate_music_route():
     user_input = data.get('user_input')
     aiml_api_key = os.getenv('AIML_API_KEY')
     gloo_api_key = os.getenv("GLOO_API_KEY")
-
+    
     # Decide which handler to use based on the device type
     if device == "fitbit":
         handler = FitbitRequestHandler(access_token, date, mood, aiml_api_key, gloo_api_key)
