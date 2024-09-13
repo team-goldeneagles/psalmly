@@ -1,5 +1,6 @@
 import requests
 import time
+import os
 from supabase import create_client, Client
 
 # Initialize Supabase client
