@@ -1,6 +1,7 @@
 import requests
 import time
 import os
+from urllib.parse import urlparse, parse_qs
 from supabase import create_client, Client
 
 # Initialize Supabase client
@@ -9,6 +10,23 @@ key = os.environ.get("SUPABASE_KEY")
 supabase: Client = create_client(url, key)
 
 def handle_audio_storage(audio_url, audio_title):
+    # Step 1: Parse the original URL to extract the item_id
+    parsed_url = urlparse(audio_url)
+    query_params = parse_qs(parsed_url.query)
+    item_id = query_params.get('item_id', [None])[0]
+
+    # Check if the item_id is found
+    if not item_id:
+        print("Error: item_id not found in the URL")
+        return None
+
+    # Step 2: Reconstruct the correct audio URL
+    new_audio_url = f"https://cdn1.suno.ai/{item_id}.mp3"
+    print(f"New audio URL: {new_audio_url}")
+
+    # Step 3: Proceed with the download process
+    local_filename = f"{audio_title}.mp3"
+
     attempts = 0
     max_attempts = 3
     downloaded_audio = None
@@ -17,7 +35,7 @@ def handle_audio_storage(audio_url, audio_title):
 
     while attempts < max_attempts:
         try:
-            response = requests.get(audio_url)
+            response = requests.get(new_audio_url, stream=True)
             if response.status_code == 200:
                 # Download the file
                 with open(filename, 'wb+') as f:
