@@ -1,5 +1,4 @@
 import requests
-from .supabase_functions import handle_audio_storage  # Import the new Supabase function
 from urllib.parse import urlparse, parse_qs
 import time
 import asyncio
@@ -33,7 +32,7 @@ def generate_music(lyrics, genre, title, aiml_api_key):
 
         temp_url = f"https://api.aimlapi.com/?ids[0]={item_id}"
 
-        for attempt in range(6):  # Loop 6 times
+        for attempt in range(10):  # Loop 10 times
             temp_response = requests.get(temp_url, headers=headers)
             response_json = temp_response.json()
             
