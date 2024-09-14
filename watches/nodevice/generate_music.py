@@ -48,7 +48,7 @@ def generate_music(lyrics, genre, title, aiml_api_key):
             "title": second_song.get("title"),
             "image_url": second_song.get("image_url"),
             "lyrics": second_song.get("lyric"),
-            "audio_url": second_song.get("audio_url"),
+            "audio_url": new_audio_url,
             "tags": second_song.get("tags")
         }
     else:
