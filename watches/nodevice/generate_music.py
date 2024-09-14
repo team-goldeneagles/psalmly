@@ -37,7 +37,6 @@ def generate_music(lyrics, genre, title, aiml_api_key):
             temp_response = requests.get(temp_url, headers=headers)
             response_json = temp_response.json()
             
-
             # Check if the response status is 'complete'
             if response_json and response_json[0].get('status') == 'complete':
                 new_audio_url = response_json[0].get('audio_url')
@@ -48,6 +47,7 @@ def generate_music(lyrics, genre, title, aiml_api_key):
 
 
         return {
+            "status": response_json[0].get('status'),
             "title": second_song.get("title"),
             "image_url": second_song.get("image_url"),
             "lyrics": second_song.get("lyric"),
