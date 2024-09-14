@@ -1,6 +1,7 @@
 import requests
 from .supabase_functions import handle_audio_storage  # Import the new Supabase function
 from urllib.parse import urlparse, parse_qs
+import time
 
 def generate_music(lyrics, genre, title, aiml_api_key):
     url = "https://api.aimlapi.com/generate/custom-mode"
@@ -26,6 +27,7 @@ def generate_music(lyrics, genre, title, aiml_api_key):
         # Call the Supabase function to handle the audio
 
         # #########################################
+        time.sleep(30)
         parsed_url = urlparse(audio_url)
         query_params = parse_qs(parsed_url.query)
         item_id = query_params.get('item_id', [None])[0]
