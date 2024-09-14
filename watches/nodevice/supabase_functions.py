@@ -44,7 +44,8 @@ def handle_audio_storage(audio_url, audio_title):
                 downloaded_audio = filename
                 break
             else:
-                print("failed")
+                print(response.status_code)
+                print(response.text)
                 attempts += 1
                 time.sleep(2)  # Delay before retrying
         except Exception as e:
