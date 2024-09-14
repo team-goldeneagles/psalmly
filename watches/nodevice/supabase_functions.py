@@ -22,7 +22,6 @@ def handle_audio_storage(audio_url, audio_title):
 
     # Step 2: Reconstruct the correct audio URL
     new_audio_url = f"https://cdn1.suno.ai/{item_id}.mp3"
-    print(f"New audio URL: {new_audio_url}")
 
     # Step 3: Proceed with the download process
     local_filename = f"{audio_title}.mp3"
@@ -60,9 +59,11 @@ def handle_audio_storage(audio_url, audio_title):
             supabase.storage.from_("psalmly").upload(
                 file=f,
                 path=filename,
-                file_options={"content-type": "audio/mp3"}
+                file_options={"content-type": "audio/mpeg"}
             )
-        return f"https://https://api.ievangelize.app/storage/v1/object/public/{supabase_path}"
+        
+        # return f"https://api.ievangelize.app/storage/v1/object/public/psalmly/{filename}"
+        return supabase.storage.from_('psalmly').get_public_url(filename)
     except Exception as e:
         print(f"Error uploading to Supabase: {e}")
         return ""
