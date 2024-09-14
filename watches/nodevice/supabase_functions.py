@@ -35,8 +35,8 @@ def handle_audio_storage(audio_url, audio_title):
 
     while attempts < max_attempts:
         try:
-            # response = requests.get(new_audio_url, stream=True)
-            response = requests.get("https://cdn1.suno.ai/dafb3640-4020-4b06-812e-96faad3c05ec.mp3", stream=True)
+            response = requests.get(new_audio_url, stream=True)
+            # response = requests.get("https://cdn1.suno.ai/dafb3640-4020-4b06-812e-96faad3c05ec.mp3", stream=True)
             if response.status_code == 200:
                 # Download the file
                 with open(filename, 'wb+') as f:
@@ -59,8 +59,8 @@ def handle_audio_storage(audio_url, audio_title):
         with open(filename, 'rb') as f:
             supabase.storage.from_("psalmly").upload(
                 file=f,
-                path=supabase_path,
-                file_options={"content-type": "audio/mpeg"}
+                path=filename,
+                file_options={"content-type": "audio/mp3"}
             )
         return f"https://https://api.ievangelize.app/storage/v1/object/public/{supabase_path}"
     except Exception as e:
