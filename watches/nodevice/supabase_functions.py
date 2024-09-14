@@ -29,7 +29,7 @@ def handle_audio_storage(audio_url, audio_title):
     attempts = 0
     max_attempts = 3
     downloaded_audio = None
-    filename = audio_title.lower().replace(' ', '_')
+    filename = audio_title.lower().replace(' ', '_') + ".mp3"
     supabase_path = f"psalmly/{filename}"
 
     while attempts < max_attempts:
@@ -37,12 +37,14 @@ def handle_audio_storage(audio_url, audio_title):
             response = requests.get(new_audio_url, stream=True)
             # response = requests.get("https://cdn1.suno.ai/dafb3640-4020-4b06-812e-96faad3c05ec.mp3", stream=True)
             if response.status_code == 200:
+                print("ran download")
                 # Download the file
                 with open(filename, 'wb+') as f:
                     f.write(response.content)
                 downloaded_audio = filename
                 break
             else:
+                print("failed")
                 attempts += 1
                 time.sleep(2)  # Delay before retrying
         except Exception as e:
