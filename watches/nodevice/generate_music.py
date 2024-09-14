@@ -2,6 +2,7 @@ import requests
 from .supabase_functions import handle_audio_storage  # Import the new Supabase function
 from urllib.parse import urlparse, parse_qs
 import time
+import asyncio
 
 def generate_music(lyrics, genre, title, aiml_api_key):
     url = "https://api.aimlapi.com/generate/custom-mode"
@@ -17,34 +18,40 @@ def generate_music(lyrics, genre, title, aiml_api_key):
         "wait_audio": True
     }
     response = requests.post(url, json=payload, headers=headers)
-    response_json = response.json()
+    init_response_json = response.json()
     
-    if len(response_json) > 1:
-        second_song = response_json[1]
+    if len(init_response_json) > 1:
+        second_song = init_response_json[1]
         audio_url = second_song.get("audio_url")
         audio_title = second_song.get("title")
-
-        # Call the Supabase function to handle the audio
+        new_audio_url = None
 
         # #########################################
-        time.sleep(30)
         parsed_url = urlparse(audio_url)
         query_params = parse_qs(parsed_url.query)
         item_id = query_params.get('item_id', [None])[0]
 
         temp_url = f"https://api.aimlapi.com/?ids[0]={item_id}"
-        temp_response = requests.get(temp_url, headers=headers)
-        print(temp_response.text)
 
-        ###############################################
+        for attempt in range(6):  # Loop 6 times
+            temp_response = requests.get(temp_url, headers=headers)
+            response_json = temp_response.json()
+            
 
-        new_audio_url = handle_audio_storage(audio_url, audio_title)
+            # Check if the response status is 'complete'
+            if response_json and response_json[0].get('status') == 'complete':
+                new_audio_url = response_json[0].get('audio_url')
+                break
+
+            # Wait for 15 seconds before the next attempt
+            time.sleep(15)
+
 
         return {
             "title": second_song.get("title"),
             "image_url": second_song.get("image_url"),
             "lyrics": second_song.get("lyric"),
-            "audio_url": new_audio_url,  # Use the new audio URL from Supabase
+            "audio_url": new_audio_url, 
             "tags": second_song.get("tags")
         }
     else:
