@@ -62,8 +62,7 @@ def handle_audio_storage(audio_url, audio_title):
                 file_options={"content-type": "audio/mpeg"}
             )
         
-        # return f"https://api.ievangelize.app/storage/v1/object/public/psalmly/{filename}"
-        return supabase.storage.from_('psalmly').get_public_url(filename)
+        return f"https://api.ievangelize.app/storage/v1/object/public/psalmly/psalmly/{filename}"
     except Exception as e:
         print(f"Error uploading to Supabase: {e}")
         return ""
