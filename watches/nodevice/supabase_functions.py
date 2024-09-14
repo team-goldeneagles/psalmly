@@ -11,7 +11,6 @@ supabase: Client = create_client(url, key)
 
 def handle_audio_storage(audio_url, audio_title):
     # Step 1: Parse the original URL to extract the item_id
-    print(audio_url)
     parsed_url = urlparse(audio_url)
     query_params = parse_qs(parsed_url.query)
     item_id = query_params.get('item_id', [None])[0]
@@ -23,7 +22,6 @@ def handle_audio_storage(audio_url, audio_title):
 
     # Step 2: Reconstruct the correct audio URL
     new_audio_url = f"https://cdn1.suno.ai/{item_id}.mp3"
-    print(new_audio_url)
     # Step 3: Proceed with the download process
     local_filename = f"{audio_title}.mp3"
 
