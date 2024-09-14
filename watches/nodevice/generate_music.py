@@ -27,7 +27,7 @@ def generate_music(lyrics, genre, title, aiml_api_key):
         # Call the Supabase function to handle the audio
 
         # #########################################
-        time.sleep(10)
+        time.sleep(30)
         parsed_url = urlparse(audio_url)
         query_params = parse_qs(parsed_url.query)
         item_id = query_params.get('item_id', [None])[0]
