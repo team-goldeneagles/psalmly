@@ -22,7 +22,6 @@ def generate_music(lyrics, genre, title, aiml_api_key):
     if len(init_response_json) > 1:
         second_song = init_response_json[1]
         audio_url = second_song.get("audio_url")
-        audio_title = second_song.get("title")
         new_audio_url = None
 
         # #########################################
@@ -46,11 +45,10 @@ def generate_music(lyrics, genre, title, aiml_api_key):
 
 
         return {
-            "status": response_json[0].get('status'),
             "title": second_song.get("title"),
             "image_url": second_song.get("image_url"),
             "lyrics": second_song.get("lyric"),
-            "audio_url": new_audio_url, 
+            "audio_url": second_song.get("audio_url"),
             "tags": second_song.get("tags")
         }
     else:
